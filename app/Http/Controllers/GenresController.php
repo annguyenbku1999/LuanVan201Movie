@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Models\Movie;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
-class MovieController extends Controller
+class GenresController extends Controller
 {
-  public function ShowMovie($slug1, $slug2 = null, $slug3 = null){
+  public function ShowGenres($slug1, $slug2 = null, $slug3 = null){
     $this->slug = $slug3 ?? $slug2 ?? $slug1;
     if(isset($this->slug)){
       $movie = DB::table('Movies')
-                ->where('Slug','like', $this->slug)
+                ->where('GenreName','like', '%'.$this->slug.'%')
                 ->select()
                 ->get();
       $result = response()->json($movie,200);

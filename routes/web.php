@@ -13,10 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/ShowMovie', 'App\Http\Controllers\MovieController@ShowMovie');
-// Route::group(['middleware' => 'cors'], function($router){
-//   $router->get('/test', 'App\Http\Controllers\MovieController@test');
+URL::forceScheme('https');
+
+// $router->get('/', function () use ($router) {
+//   return $router->app->version();
 // });
+$router->group(['prefix' => 'api'], function () use ($router) {
+
+  
+  $router->get('ShowMovie/{slug1}/{slug2?}/{slug3?}', [
+    'uses' => 'App\Http\Controllers\MovieController@ShowMovie'
+  ]);
+  $router->get('ShowGenres/{slug1}/{slug2?}/{slug3?}', [
+    'uses' => 'App\Http\Controllers\GenresController@ShowGenres'
+  ]);
+  
+
+});
